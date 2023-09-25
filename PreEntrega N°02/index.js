@@ -70,8 +70,8 @@ const env = async() => {
 
         //--------------------------------- Eliminar Producto  -------------------------------------------
         // Aqui eliminamos el producto por Id
-        const productoEliminado = await manager.deleteProductById(1);
-        console.log('Producto eliminado:', productoEliminado)
+        /* const productoEliminado = await manager.deleteProductById(1);
+        console.log('Producto eliminado:', productoEliminado) */
         
 
 
