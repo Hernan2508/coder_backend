@@ -16,8 +16,12 @@
 		"title": "xxxxxxxxx",
 		"description": "sdsdsdsdsds",
 		"price": 1400,
-		"thumbnail": "Sin imagen",
-		"code": "prod-0145",
+		"thumbnail": [
+			"Sin imagen",
+			"Sin imagen 2",
+			"Sin imagen 3"
+		],
+		"code": "prod-019",
 		"stock": 50,
 		"id": 3
 	},

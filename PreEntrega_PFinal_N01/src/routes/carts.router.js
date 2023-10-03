@@ -90,33 +90,39 @@ router.post('/:cid/product/:pid', async (req, res) =>{
 
     try{
 
-        const cid = req.params.cid;
-        const pid = req.params.pid;
+        const cartId = Number(req.params.cid);
+        const productId = Number(req.params.pid);
 
         //Validación si el carrito existe
-        
-        const cart = await cartManager.getCartById(cid);
+        const cart = await cartManager.getCartById(cartId);
 
         if(cart === "Carrito No Encontrado"){
             res.status(404).send({status: 'error', message: "Carrito no Encontrado"});
             return;
         }
 
-        //
+        // Verifica si el producto ya está en el carrito
+        const existingProduct = cart.products.find(product => product.id === productId);
+        //Si el producto existe
+        if (existingProduct) {
+            existingProduct.quantity ++;
+
+        } else {
+            //si el producto no está en el carrito, agrégalo con la cantidad 1
+            cart.products.push({ id: productId, quantity: 1 });
+        }
+
+        // Actualiza el carrito con el producto agregado
+
+        const updateCart  = await cartManager.updateCartById(cartId, cart);
+
+        if (updateCart.status === 'success') {
+            res.send({ status: 'success', message: 'Producto agregado al carrito' });
+        } else {
+            res.status(404).send({ status: 'error', message: 'Carrito no encontrado' });
+        }
 
 
-    //const carts = await cartManager.ge
-    //obtengo todos los carritos
-    //busco en ese arreglo el carrito con el cid
-    //insertar en el arreglo de productos de ese carritoy y hago un push de un objeto
-    //{id:pid}
-    //Guardar en el archivo
-    //Validación adicional en el caso de que el producto ya se encuentre en el carrito
-    //Busco en el arreglo del producto de ese carrito si el producto que quiero agregar ya existe
-    //Si existe product.quantity ++
-    //Si no existe producto.quantit = 1
-
-    //Guardar en el archivo
     } catch(error){
         ///Manejo de Errores en General: Codigo 500 :Internal Server Error
         res.status(500).send({ error: 'Se produjo un error al procesar la consulta'})

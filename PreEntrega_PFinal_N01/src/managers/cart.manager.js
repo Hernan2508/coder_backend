@@ -116,5 +116,28 @@ export default class CartManager {
     
     }
 
+    updateCartById = async(cartId, updateCart) =>{
+        try {
+            const carts = await this.getCarts();
+    
+            const cartIndex = carts.findIndex(cart => cart.id === cartId);
+    
+            if (cartIndex !== -1) {
+                carts[cartIndex] = updateCart;
+    
+                //Escribir el arreglo actualizado
+                await promises.writeFile(this.path, JSON.stringify(carts, null, '\t'));
+    
+                return { status: 'success', message: 'Carrito actualizado con éxito' };
+            } else {
+                return { status: 'error', message: 'Carrito no encontrado' };
+            }
+        } catch (error) {
+            
+            throw new Error('Error al actualizar el carrito: ' + error.message);
+        }
+
+    }
+
 
 }
