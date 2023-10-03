@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import CartManager from '../managers/cart.manager.js'
+import { cartsFilePath } from '../utils.js';
 
 
 const router = Router();
 
 //Creamos la instacia de la clase
-const cartManager = new CartManager('./files/carritos.json')
+const cartManager = new CartManager(cartsFilePath)  //new CartManager('./files/carritos.json')
 
 
 router.get('/', async (req, res) => {

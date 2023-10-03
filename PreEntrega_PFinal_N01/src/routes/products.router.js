@@ -5,7 +5,7 @@ import { productsFilePath } from '../utils.js';
 const router = Router();
 
 //Creamos la instacia de la clase
-const productManager = new ProductManager('./files/productos.json')
+const productManager = new ProductManager(productsFilePath)//ProductManager('./files/productos.json')
 
 //Construcción de nuestro servicio o endpoint
 router.get('/', async (req, res) =>{

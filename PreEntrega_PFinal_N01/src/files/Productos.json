@@ -1,28 +1,29 @@
 [
 	{
-		"title": "xxxxxxxxx",
-		"description": "sdsdsdsdsds",
+		"title": "refrigeradora",
+		"description": "electrodomesticos",
 		"price": 1400,
-		"thumbnail": [
-			"Sin imagen",
-			"Sin imagen 2",
-			"Sin imagen 3"
-		],
-		"code": "prod-0145",
+		"thumbnail": "Sin imagen",
+		"code": "prod-01",
 		"stock": 50,
+		"id": 1
+	},
+	{
+		"title": "cocina",
+		"description": "electrodomesticos",
+		"price": 900,
+		"thumbnail": "Sin imagen",
+		"code": "prod-02",
+		"stock": 25,
 		"id": 2
 	},
 	{
-		"title": "xxxxxxxxx",
-		"description": "sdsdsdsdsds",
-		"price": 1400,
-		"thumbnail": [
-			"Sin imagen",
-			"Sin imagen 2",
-			"Sin imagen 3"
-		],
-		"code": "prod-019",
-		"stock": 50,
+		"title": "licuadora",
+		"description": "electrodomesticos",
+		"price": 135,
+		"thumbnail": "Sin imagen",
+		"code": "prod-03",
+		"stock": 25,
 		"id": 3
 	},
 	{
