@@ -19,7 +19,7 @@ router.get('/products-view', async (req, res) =>{
     } catch (error) {
         console.error(error.message);
     }
-})
+});
 
 router.get('/carts-view', async (req, res) =>{
     try {
@@ -28,6 +28,10 @@ router.get('/carts-view', async (req, res) =>{
     } catch (error) {
         console.error(error.message);
     }
+});
+
+router.get('/', async( req, res) =>{
+    res.render('chat');
 })
 
 export default router;

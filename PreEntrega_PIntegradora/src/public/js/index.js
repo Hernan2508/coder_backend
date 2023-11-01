@@ -1,94 +1,41 @@
 const socket = io(); //Conexion con Websockets
 
+let user;
 
-// ? --------------------------------
-// ? Renderizar Productos por CLiente
-// ? --------------------------------
-
-
-socket.emit('getProducts');
+const chatBox = document.getElementById('chatBox');
+const messagesLogs = document.getElementById('messageLogs');
 
 
-// ? --------------------------------
-// ? Agregar Productos por CLiente
-// ? --------------------------------
-
-const addProductForm = document.getElementById('add-product-form');
-
-addProductForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    // Obtener los valores de los inputs
-
-    const title = document.getElementById('title').value;
-    const description = document.getElementById('description').value;
-    const price = document.getElementById('price').value;
-    const thumbnail = document.getElementById('thumbnail').value;
-    const code = document.getElementById('code').value;
-    const stock = document.getElementById('stock').value;
-
-    // Crear un objeto con los valores
-    const nuevoProducto = {
-        title,
-        description,
-        price,
-        thumbnail,
-        code,
-        stock
-    };
-
-    // Enviar el objeto al servidor a través de sockets
-    socket.emit('addProduct', nuevoProducto);
-
-    // Limpiar los campos de entrada
-    addProductForm.reset();
-
+Swal.fire({
+    title: 'Identificate',
+    input: 'text',
+    text: 'Ingresa el usuaio para identificarte en el chat',
+    inputValidator: (value) => {
+        return !value && 'Necesitar escribir un nombre de usuario para comenzar el chat'
+    },
+    allowOutsideClick: false,
+    allowEscapeKey: false
+}).then(result =>{
+    user = result.value;
+    socket.emit('authenticated', user);
 });
 
-
-// ? --------------------------------
-// ? Eliminar Productos por CLiente
-// ? --------------------------------
-
-const deleteProductForm = document.getElementById('delete-product-form');
-const productIdInput = document.getElementById('delete-product-by-id');
-
-deleteProductForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const productId = productIdInput.value;
-
-    // Enviar el ID del producto al servidor a través de sockets
-    socket.emit('deleteProductById', productId);
-
-    // Limpiar el campo de entrada
-    productIdInput.value = '';
+chatBox.addEventListener('keyup', evt => {
+    if(evt.key === 'Enter'){
+        if(chatBox.value.trim().length > 0){
+            socket.emit('message', { user, message: chatBox.value});
+            chatBox.value = '';
+        }
+    }
 });
 
-// * ------------------------------------------
-// * Anexar la Lista de Productos en la vista
-// * ------------------------------------------
-
-const productList = document.getElementById('product-list');
-
-socket.on('getProducts', products => {
-    productList.innerHTML = '';
-
-    products.forEach(product => {
-        productList.innerHTML += `
-            <div>
-                <p>Producto N° ${product.id}</p>
-                <ul>
-                    <li>producto:  ${product.title}</li>
-                    <li>descripción: ${product.description}</li>
-                    <li>precio: ${product.price}</li>
-                    <li>thumbnail: ${product.thumbnail}</li>
-                    <li>codigo: ${product.code}</li>
-                    <li>stock: ${product.stock}</li>
-                    <li>id: ${product.id}</li>
-                </ul>
-            </div>
-            <hr>
-        `;
+//Recibir todos los mensajes
+socket.on('messageLogs', data =>{
+    console.log(data);
+    let messages = '';
+    data.forEach(message => {
+        messages += `${message.user} dice: ${message.message}<br>`
     });
+
+    messagesLogs.innerHTML = messages;
 });
