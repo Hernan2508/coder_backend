@@ -38,4 +38,6 @@ socket.on('messageLogs', data =>{
     });
 
     messagesLogs.innerHTML = messages;
-});
+}); 
+
+
