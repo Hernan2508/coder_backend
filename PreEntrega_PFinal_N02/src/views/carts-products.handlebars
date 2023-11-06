@@ -1,0 +1,16 @@
+<p>Detalle de Productos por Carrito</p>
+<hr>
+<div>
+    <ul>
+        <li>Productos:</li>
+        <ul>
+            {{#each products}}
+            <hr>
+            <li>Producto: {{this.product.title}}</li>
+            <li>Cantidad: {{this.quantity}}</li>
+            <hr>
+            {{/each}}
+        </ul>
+    </ul>
+</div>
+<hr>

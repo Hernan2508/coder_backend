@@ -38,5 +38,10 @@ const cartsSchema = new mongoose.Schema({
     }
 });
 
+//Especificar un middleware
+// cada vez que yo haga un find aplicamos esta population
+cartsSchema.pre(['find','findOne'], function(){
+    this.populate('products.product');
+});
 
 export const cartsModel = mongoose.model(cartsCollection, cartsSchema);
