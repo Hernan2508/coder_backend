@@ -1,7 +1,7 @@
 [
 	{
 		"title": "refrigeradora",
-		"description": "cocina",
+		"description": "electrodomesticos",
 		"price": 1400,
 		"thumbnail": "Sin imagen",
 		"code": "prod-01",
@@ -10,7 +10,7 @@
 	},
 	{
 		"title": "cocina",
-		"description": "cocina",
+		"description": "electrodomesticos",
 		"price": 900,
 		"thumbnail": "Sin imagen",
 		"code": "prod-02",
@@ -19,16 +19,16 @@
 	},
 	{
 		"title": "licuadora",
-		"description": "cocina",
+		"description": "electrodomesticos",
 		"price": 135,
 		"thumbnail": "Sin imagen",
 		"code": "prod-03",
-		"stock": 0,
+		"stock": 25,
 		"id": 3
 	},
 	{
-		"title": "aspiradora",
-		"description": "limpieza",
+		"title": "batidora",
+		"description": "electrodomesticos",
 		"price": 220,
 		"thumbnail": "Sin imagen",
 		"code": "prod-04",
@@ -36,8 +36,8 @@
 		"id": 4
 	},
 	{
-		"title": "lustradora",
-		"description": "limpieza",
+		"title": "extractor",
+		"description": "electrodomesticos",
 		"price": 89,
 		"thumbnail": "Sin imagen",
 		"code": "prod-05",
@@ -45,8 +45,8 @@
 		"id": 5
 	},
 	{
-		"title": "audifonos",
-		"description": "tecnologia",
+		"title": "waflera",
+		"description": "electrodomesticos",
 		"price": 120,
 		"thumbnail": "Sin imagen",
 		"code": "prod-06",
@@ -54,8 +54,8 @@
 		"id": 6
 	},
 	{
-		"title": "laptop",
-		"description": "tecnologia",
+		"title": "aspiradora",
+		"description": "electrodomesticos",
 		"price": 275,
 		"thumbnail": "Sin imagen",
 		"code": "prod-07",
@@ -63,8 +63,8 @@
 		"id": 7
 	},
 	{
-		"title": "radio",
-		"description": "tecnologia",
+		"title": "lavadora",
+		"description": "electrodomesticos",
 		"price": 1250,
 		"thumbnail": "Sin imagen",
 		"code": "prod-08",
@@ -73,7 +73,7 @@
 	},
 	{
 		"title": "cafetera",
-		"description": "cocina",
+		"description": "electrodomesticos",
 		"price": 150,
 		"thumbnail": "Sin imagen",
 		"code": "prod-09",
@@ -82,7 +82,7 @@
 	},
 	{
 		"title": "plancha",
-		"description": "limpieza",
+		"description": "electrodomesticos",
 		"price": 125,
 		"thumbnail": "Sin imagen",
 		"code": "prod-10",
