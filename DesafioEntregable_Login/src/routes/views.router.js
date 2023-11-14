@@ -10,7 +10,23 @@ const router = Router();
 const productsManager = new Products();
 const cartsManager = new Carts();
 
-router.get('/products', async (req, res) => {
+
+/* Implementación del Login */
+
+const publicAccess = (req, res, next) => {
+  if(req.session?.user) return res.redirect('/'); //para que se vaya a su profile
+  next();
+}
+
+const privateAccess = (req, res, next) => {
+  if(!req.session?.user) return res.redirect('/login'); //en caso no te hayas registrado
+  next();
+}
+
+//----------------------------------------------------------------------------------------------------
+
+
+router.get('/products', privateAccess, async (req, res) => {
 
     try {
 
@@ -24,6 +40,7 @@ router.get('/products', async (req, res) => {
         hasNextPage,
         prevPage,
         nextPage,
+        user: req.session.user
 
       });
 
@@ -34,7 +51,7 @@ router.get('/products', async (req, res) => {
   });
 
 
-  router.get('/products/:productId', async (req, res) => {
+  router.get('/products/:productId', privateAccess, async (req, res) => {
     try {
 
       const {productId} = req.params;
@@ -45,7 +62,7 @@ router.get('/products', async (req, res) => {
         return res.render('error', { message: 'Producto no encontrado' });
       }
   
-      res.render('products-details', { product });
+      res.render('products-details', { product});
     } catch (error) {
       console.error(error.message);
     }
@@ -53,7 +70,7 @@ router.get('/products', async (req, res) => {
 
 
 
-router.get('/carts', async (req, res) =>{
+router.get('/carts', privateAccess, async (req, res) =>{
     try {
 
         const carts = await cartsManager.getAll();
@@ -68,7 +85,7 @@ router.get('/carts', async (req, res) =>{
 });
 
 
-router.get('/carts/:cid', async (req, res) => {
+router.get('/carts/:cid', privateAccess, async (req, res) => {
     try {
         const { cid } = req.params; // Obtén el ID del carrito desde la URL
 
@@ -91,22 +108,12 @@ router.get('/carts/:cid', async (req, res) => {
 });
 
 
-router.get('/chat', async( req, res) =>{
+router.get('/chat', privateAccess, async( req, res) =>{
     res.render('chat');
 })
 
 
-/* Implementación del Login */
-
-const publicAccess = (req, res, next) => {
-  if(req.session?.user) return res.redirect('/'); //para que se vaya a su profile
-  next();
-}
-
-const privateAccess = (req, res, next) => {
-  if(!req.session?.user) return res.redirect('/login'); //en caso no te hayas registrado
-  next();
-}
+// Views nuevas
 
 router.get('/register', publicAccess, (req, res) =>{
   res.render('register')
