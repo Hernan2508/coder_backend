@@ -1,0 +1,14 @@
+<p>Lista de Carritos</p>
+<hr>
+<div>
+    {{#each carts}}
+    <ul>
+        <li>ID del Carrito: {{this._id}}</li>
+        <br>
+        <form action="/carts/{{this._id}}" method="get">
+            <button type="submit">Ver Productos</button>
+        </form>
+    </ul>
+    {{/each}}
+</div>
+<hr>

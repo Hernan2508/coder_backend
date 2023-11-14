@@ -1,6 +1,6 @@
 #### coder_backend: Proyecto
-### PreEntrega PracticaPreIntegradora : Desarrollado por Hernán Ramírez Zavaleta
-### Revisar Carpeta PreEntrega_PIntegradora
+### DESAFÍO DE LOGIN: Desarrollado por Hernán Ramírez Zavaleta
+### Revisar Carpeta DesafioEntregable_Login
 ### CODERHOUSE
 ### -----------
-### REVISAR PreEntrega_PFinal_N02 : SEGUNDA PRE ENTREGA DEL PROYECTO FINAL 06/11/2023
+### REVISAR DesafioEntregable_Login : Desafío 13/11/2023
