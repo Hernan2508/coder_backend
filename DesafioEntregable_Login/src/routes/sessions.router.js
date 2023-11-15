@@ -42,10 +42,16 @@ router.post('/login', async(req, res) =>{
             return res.status(400).send({status:'error', message:'incorrect credentials'});
         }
 
+        // Verifica si el usuario es admin
+        if (user.email === 'adminCoder@coder.com' && user.password === 'adminCod3r123') {
+            user.role = 'admin';
+        }
+
         req.session.user = {
             name: `${user.first_name} ${user.last_name}`,
             email: user.email,
-            age: user.age
+            age: user.age,
+            role: user.role
         }
 
         res.send({status: 'success', message: 'login success'});
