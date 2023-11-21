@@ -10,12 +10,14 @@ import session from 'express-session'; //ya incluye el guardado de cookies
 import { __dirname } from './utils.js';
 import { Server } from 'socket.io';
 import Messages from './dao/dbManagers/messages.manager.js'
+import { initializePassport } from './config/passport.config.js';
+import passport from 'passport';
 
 
 const app = express();
 
 try {
-    await mongoose.connect('mongodb+srv://hernan2508rz:GatND92qWlo6GxWm@cluster55575hr.h94ultt.mongodb.net/desafioEntregableLogin?retryWrites=true&w=majority');
+    await mongoose.connect('mongodb+srv://hernan2508rz:GatND92qWlo6GxWm@cluster55575hr.h94ultt.mongodb.net/desafioEntregableAutenticacion?retryWrites=true&w=majority');
     console.log('DB connected');
 } catch (error) {
     console.log(error.message)
@@ -42,6 +44,10 @@ app.use(session({
     saveUninitialized: true, 
 }));
 
+//Passport
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Routes
 app.use('/', viewsRouter);
