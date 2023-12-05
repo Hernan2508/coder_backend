@@ -1,6 +1,6 @@
 #### coder_backend: Proyecto
-### DESAFÍO DE AUTENTICACIÓN: Desarrollado por Hernán Ramírez Zavaleta
-### Revisar Carpeta DesafioEntregable_Autenticacion
+### DESAFÍO SEGUNDO PRACTICA INTEGRADORA: Desarrollado por Hernán Ramírez Zavaleta
+### Revisar Carpeta DesafioEntregable_SegundaPracticaIntegradora
 ### CODERHOUSE
 ### -----------
-### REVISAR DesafioEntregable_Autenticacion : Desafío 20/11/2023 ------
+### REVISAR DesafioEntregable_SegundaPracticaIntegradora : Desafío 04/12/2023 ------
