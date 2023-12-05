@@ -1,65 +1,48 @@
 import passport from 'passport';
-import local from 'passport-local';
 import GitHubStrategy from 'passport-github2';
 import usersModel from '../dao/dbManagers/models/users.model.js';
-import { createHash, isValidPassword } from '../utils.js';
+import { createHash, isValidPassword, PRIVATE_KEY } from '../utils.js';
+import jwt from 'passport-jwt';
 
 //local es auntenticacion con usuario y contraseña
-const LocalStrategy = local.Strategy;
+const JWTStrategy = jwt.Strategy;
+
+//Passport si sabe como obtener JWT desde los headers del request
+const ExtractJWT = jwt.ExtractJwt;
+
+
+const cookieExtractor = req => {
+    let token = null;
+    if(req && req.cookies){
+        token = req.cookies['coderCookieToken']; //auth.routher
+    }
+    return token;
+}
 
 //incializar Passport
 const initializePassport = () => {
-    // ---------------------------------------------
-    //Implementacion de nuestro registro
-    // ---------------------------------------------
-    passport.use('register', new LocalStrategy({
-        passReqToCallback: true, // --> nos permite acceder al objeto request, como cualquier otro middleware
-        usernameField: 'email' //por defecto NO, ya que usamos email como usuario
-    }, async (req, username, password, done) => { //el campo username es por defecto en passport
+
+    passport.use('jwt', new JWTStrategy({
+        jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+        secretOrKey: PRIVATE_KEY
+    }, async(jwt_payload, done) => {
+        /*{
+             {
+                "user": {
+                  "name": "prueba",
+                  "email": "prueba@gmail.com"
+                }
+              }
+        } */
         try {
-            const { first_name, last_name, age} = req.body; // ya no es necesario colocar el email y el password porque ya lo tomaron
-            const user = await usersModel.findOne({email: username});
+            //probando validaciones
+            /* if(!jwt_payload.test){
+                return done(null, false, { messages: 'error ivalid attribute'});
+            } */
+            return done(null, jwt_payload.user); //req.user seteamos: name, email
             
-            if(user){
-                return done(null, false); //no hay error
-            };
-
-            //luego el flujo normal de registro
-
-            const userToSave = {
-                first_name,
-                last_name,
-                email: username,
-                age,
-                password: createHash(password)
-            }
-
-            const result = await usersModel.create(userToSave);
-            return done(null, result); //req.user { first, last, age, email} esto ya lo crea automaticamente
-
         } catch (error) {
-            return done(`Incorrect credentials`);
-        }
-    }));
-
-    // ---------------------------------------------
-    //Implementacion de nuestro login
-    // ---------------------------------------------
-
-    passport.use('login', new LocalStrategy({
-        usernameField: 'email' //por defecto NO, ya que usamos email como usuario
-    }, async (username, password, done) => { 
-        try {
-            const user = await usersModel.findOne({ email: username});
-
-            if(!user || !isValidPassword(password, user.password)){
-                return done(null, false);
-            }
-
-            return done(null, user); //setea a nivel de nuestro objeto request un objeto user, en caso todo vaya bien
-
-        } catch (error) {
-            return done(`Incorrect credentials`);
+            return done(error);
         }
     }));
 
@@ -119,6 +102,21 @@ const initializePassport = () => {
     });
 }
 
+const passportCall = (strategy) => {
+    return async(req, res, next) =>{
+        passport.authenticate(strategy, { session: false }, function(err, user, info){
+            if(err) return next(err);
+            if(!user){
+                return res.status(401).send({status: 'error', error: info.messages ? info.messages: info.toString()})
+            }
+            req.user = user;
+            next();
+        })(req, res, next);
+    }
+}
+
+
 export {
-    initializePassport
+    initializePassport,
+    passportCall
 }

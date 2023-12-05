@@ -17,7 +17,7 @@ import passport from 'passport';
 const app = express();
 
 try {
-    await mongoose.connect('mongodb+srv://hernan2508rz:GatND92qWlo6GxWm@cluster55575hr.h94ultt.mongodb.net/desafioEntregableAutenticacion?retryWrites=true&w=majority');
+    await mongoose.connect('mongodb+srv://hernan2508rz:GatND92qWlo6GxWm@cluster55575hr.h94ultt.mongodb.net/desafioEntreg2daPractInt?retryWrites=true&w=majority');
     console.log('DB connected');
 } catch (error) {
     console.log(error.message)
