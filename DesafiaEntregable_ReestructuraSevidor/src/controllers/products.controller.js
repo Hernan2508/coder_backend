@@ -1,5 +1,5 @@
 import Products from '../dao/dbManagers/products.manager.js'
-
+import { productsModel } from '../dao/dbManagers/models/products.model.js';
 const productsManager = new Products()
 
 //EP1 Obtener el listado de Productos
