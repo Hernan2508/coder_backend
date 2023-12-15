@@ -1,52 +1,15 @@
 import { Router } from 'express';
-import usersModel from '../dao/dbManagers/models/users.model.js';
-import { createHash, isValidPassword } from '../utils.js';
 import passport from 'passport';
+import { github, githubCallback, register, failRegister, login, failLogin, logout } from '../controllers/sessions.controller.js';
 
 const router = Router();
 
-router.get('/github', passport.authenticate('github', {scope: ['user:email']}), async(req, res) =>{
-    res.send({ status: 'success', message: 'user registered'});
-});
-
-router.get('/github-callback', passport.authenticate('github', { failureRedirect: 'login'}), async(req, res) =>{
-    req.session.user = req.user;
-    res.redirect('/');
-});
-
-//-------------------------------------------------------------------------------------------------------------------
-
-router.post('/register', passport.authenticate('register', { failureRedirect: 'fail-register' }), async (req, res) => {
-    res.status(201).send({ status: 'success', message: 'user registered' });
-});
-
-router.get('/fail-register', async (req, res) => {
-    res.status(500).send({ status: 'error', message: 'register fail' });
-});
-
-router.post('/login', passport.authenticate('login', { failureRedirect: 'fail-login' }), async (req, res) => {
-    if(!req.user) {
-        return res.status(401).send({ status: 'error', message: 'invalid credentials' })
-    }
-
-    req.session.user = {
-        name: `${req.user.first_name} ${req.user.last_name}`,
-        email: req.user.email,
-        age: req.user.age
-    }
-
-    res.send({ status: 'success', message: 'login success' })
-});
-
-router.get('/fail-login', async (req, res) => {
-    res.status(500).send({ status: 'error', message: 'login fail' });
-});
-
-router.get('/logout', (req, res) => {
-    req.session.destroy(error => {
-        if(error) return res.status(500).send({ status: 'error', message: error.message });
-        res.redirect('/');
-    })
-})
+router.get('/github', passport.authenticate('github', {scope: ['user:email']}), github); // EP1. Autenticación con GitHub
+router.get('/github-callback', passport.authenticate('github', { failureRedirect: 'login'}), githubCallback); // EP2. Callback con GitHub
+router.post('/register', passport.authenticate('register', { failureRedirect: 'fail-register' }), register); // EP3. Registro
+router.get('/fail-register', failRegister); // EP4. Fail Registro
+router.post('/login', passport.authenticate('login', { failureRedirect: 'fail-login' }), login); //EP5 Login
+router.get('/fail-login', failLogin); //EP6 Fail Login
+router.get('/logout', logout); //EP7 Logout
 
 export default router;
