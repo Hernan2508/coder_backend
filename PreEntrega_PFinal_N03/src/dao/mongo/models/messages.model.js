@@ -6,14 +6,15 @@ const messagesSchema = new mongoose.Schema({
 
     user: {
         type: String,
-        require: true 
+        required: true 
     },
 
     message:{
         type: String,
-        require: true 
+        required: true 
     }
 });
 
+const messagesModel = mongoose.model(messagesCollection, messagesSchema);
 
-export const messagesModel = mongoose.model(messagesCollection, messagesSchema);
+export default messagesModel;

@@ -1,39 +1,33 @@
-import express from 'express';
+import express from "express";
 import productsRouter from './routes/products.router.js'
 import cartsRouter from './routes/carts.router.js'
+import messagesRouter from './routes/messages.router.js'
 import viewsRouter from './routes/views.router.js'
 import sessionsRouter from './routes/sessions.router.js'
 import handlebars from 'express-handlebars';
 import mongoose from 'mongoose';
 import MongoStore from 'connect-mongo';
-import session from 'express-session'; //ya incluye el guardado de cookies
+import session from 'express-session';
 import { __dirname } from './utils.js';
 import { Server } from 'socket.io';
-import Messages from './dao/dbManagers/messages.manager.js'
+import * as messagesService from './services/messages.service.js'
 import { initializePassport } from './config/passport.config.js';
 import passport from 'passport';
-import configs from './config.js';
+import configs from "./config/config.js";
 
 const app = express();
 
-try {
-    await mongoose.connect('mongodb+srv://hernan2508rz:GatND92qWlo6GxWm@cluster55575hr.h94ultt.mongodb.net/desafioEntregableReestructuracion?retryWrites=true&w=majority');
-    console.log('DB connected');
-} catch (error) {
-    console.log(error.message)
-}
-
-// Servidor archivos estáticos
+// Servidor de Archivos Estáticos
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
 
-//Configuración de motor de plantillas
+// Configuración de motor de plantillas
 app.engine('handlebars', handlebars.engine());
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'handlebars');
 
-
+// Configuración de Sessions
 app.use(session({
     store: MongoStore.create({
         client: mongoose.connection.getClient(),
@@ -44,17 +38,18 @@ app.use(session({
     saveUninitialized: true, 
 }));
 
-//Passport
+// Configuración de Passport
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Routes
+
+// Routes
 app.use('/', viewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/sessions', sessionsRouter);
-
+app.use('/api/messages', messagesRouter);
 
 const server = app.listen(configs.port, () => console.log(`Server running on port ${configs.port}`));
 
@@ -62,26 +57,19 @@ const server = app.listen(configs.port, () => console.log(`Server running on por
 const io = new Server(server); //Real time
 app.set('socketio', io);
 
-/* Pruebas */
-
-
-const messagesManager = new Messages()
-//const messages = [];
-
-
 io.on('connection', socket => {
     console.log('Nuevo Cliente Conectado');
 
     socket.on('message', async(data) =>{
         //messages.push(data);
-        const messages = await messagesManager.save(data)
+        const messages = await messagesService.saveMessage(data)
         console.log(messages);
         io.emit('messageLogs', messages); //replicados a todos
     })
 
     socket.on('authenticated', async(data) => {
         //enviamos todos los mensajes almacelados hasta el momento solo al cliente que se acaba de conectar
-        const messages = await messagesManager.getAll();
+        const messages = await messagesService.getMessages();
         socket.emit('messageLogs', messages);
     });
 });

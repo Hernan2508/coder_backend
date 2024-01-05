@@ -1,8 +1,10 @@
-import Products from '../dao/dbManagers/products.manager.js'
-import { productsModel } from '../dao/dbManagers/models/products.model.js';
-const productsManager = new Products()
+//import Products from '../dao/mongo/classes/products.dao.js';
+import * as productsService from '../services/products.service.js'
 
-//EP1 Obtener el listado de Productos
+// Creamos la instancia de la clase
+//const productsManager = new Products();
+
+// EP1 Obtener el listado de Productos
 const getProducts = async (req, res) =>{
     try {
         const { page = 1, limit = 10, sort, field, value } = req.query;
@@ -28,7 +30,7 @@ const getProducts = async (req, res) =>{
             options.sort = { price: -1 };
         }
 
-        const result = await productsModel.paginate(filter, options);
+        const result = await productsService.getPaginatedProducts(filter, options);
 
         res.send({status: 'success', payload: result});
 
@@ -37,63 +39,32 @@ const getProducts = async (req, res) =>{
     }
 };
 
-//EP2 Encontrar un Producto por Id
-const getProductById = async (req, res) =>{
-
+// EP2 Encontrar un Producto por Id
+const getProductById = async (req, res) => {
     try {
         const { id } = req.params;
-        const product = await productsManager.getById(id);
-        
-        if(!product){
-            return res.status(404).send({ status: 'error', message: 'user not found'})
+        const product = await productsService.getProductById(id);
+
+        if (!product) {
+            return res.status(404).send({ status: 'error', message: 'Product not found' });
         }
-        res.send({ status: 'success', payload: product})
+        res.send({ status: 'success', payload: product });
 
     } catch (error) {
-        console.log(error.message);
-        res.status(500).send({ error: error.message});
+        res.status(500).send({ status: 'error', message: 'Internal Server Error' });
     }
 };
 
-//EP3 Crear un Producto
-const createProduct = async (req, res) =>{
-    try{
-        const { title, description, price, thumbnail, code, stock} = req.body; //Obtenemos los datos del nuevo producto a agregar
-        // realizamos la validación
-        if(!title || !description || !price || !thumbnail || !code || stock === undefined){
-            //Error del cliente que no envia los atributos obligatorios
-            return res.status(400).send({status: 'error', message: 'incomplete values'}); //finalizamos la ejecucioón
-        } 
-    
-        const result = await productsManager.save({
-            title,
-            description,
-            price,
-            thumbnail,
-            code,
-            stock
-        }); 
-
-        res.send({status: 'success', payload: result });
-        
-    } catch(error){
-        res.status(500).send({ error: 'Se produjo un error al procesar la consulta'})
-    }    
-};
-
-//EP4 Actualizar un Producto por Id
-const updateProductById = async (req, res) =>{
+// EP3 Crear un Producto
+const saveProduct = async (req, res) => {
     try {
-        const { title, description, price, thumbnail, code, stock} = req.body; //Obtenemos los datos del nuevo producto a agregar
-        const { id } = req.params;
+        const { title, description, price, thumbnail, code, stock } = req.body;
 
+        if (!title || !description || !price || !thumbnail || !code || stock === undefined) {
+            return res.status(400).send({ status: 'error', message: 'Incomplete values' });
+        }
 
-        if(!title || !description || !price || !thumbnail || !code || !stock){
-            //Error del cliente que no envia los atributos obligatorios
-            return res.status(400).send({status: 'error', message: 'incomplete values'}); //finalizamos la ejecucioón
-        } 
-
-        const result = await productsManager.update(id, {
+        const result = await productsService.saveProduct({
             title,
             description,
             price,
@@ -102,35 +73,61 @@ const updateProductById = async (req, res) =>{
             stock
         });
 
-        res.status(201).send({status: 'success', payload: result });
+        res.send({ status: 'success', payload: result });
 
     } catch (error) {
-        res.status(500).send({ error: 'Se produjo un error al procesar la consulta'})
+        res.status(500).send({ status: 'error', message: 'Internal Server Error' });
     }
 };
 
-//EP5 Eliminar un Producto por Id
-const deleteProductById = async (req, res) =>{
+// EP4 Actualizar un Producto por Id
+const updateProduct = async (req, res) => {
+    try {
+        const { title, description, price, thumbnail, code, stock } = req.body;
+        const { id } = req.params;
+
+        if (!title || !description || !price || !thumbnail || !code || !stock) {
+            return res.status(400).send({ status: 'error', message: 'Incomplete values' });
+        }
+
+        const result = await productsService.updateProduct(id, {
+            title,
+            description,
+            price,
+            thumbnail,
+            code,
+            stock
+        });
+
+        res.status(201).send({ status: 'success', payload: result });
+
+    } catch (error) {
+        res.status(500).send({ status: 'error', message: 'Internal Server Error' });
+    }
+};
+
+// EP5 Eliminar un Producto por Id
+const deleteProductById = async (req, res) => {
     try {
         const { id } = req.params;
-        const product = await productsManager.getById(id);
-        
-        if(!product){
-            return res.status(404).send({ status: 'error', message: 'user not found'})
+        const product = await productsService.getProductById(id);
+
+        if (!product) {
+            return res.status(404).send({ status: 'error', message: 'Product not found' });
         }
-        
-        const productEliminar = await productsManager.deleteById(id);
+
+        const productEliminar = await productsService.deleteProductById(id);
         if (productEliminar) {
-            res.send({ status: 'success', message: 'Producto eliminado con éxito' });
+            res.send({ status: 'success', message: 'Product deleted successfully' });
         };
-        
+
     } catch (error) {
-        res.status(500).send({ error: 'Se produjo un error al procesar la consulta'})
+        console.error('Error in deleteProductById method:', error);
+        res.status(500).send({ status: 'error', message: 'Internal Server Error' });
     }
 };
 
-
 export {
-    getProducts, getProductById, createProduct,
-    updateProductById, deleteProductById
-}
+    getProducts, getProductById, saveProduct,
+    updateProduct, deleteProductById
+};

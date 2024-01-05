@@ -1,18 +1,27 @@
-import Products from "../dao/dbManagers/products.manager.js";
-import Carts from "../dao/dbManagers/carts.manager.js";
+/* import Products from "../dao/dbManagers/products.manager.js";
+import Carts from "../dao/dbManagers/carts.manager.js"; */
+import * as productsService from '../services/products.service.js'
+import * as cartsService from '../services/carts.service.js'
 
 //Creamos la instacia de la clase
-const productsManager = new Products();
-const cartsManager = new Carts();
+/* const productsManager = new Products();
+const cartsManager = new Carts(); */
 
 //EP1. renderiza toda la lista de productos
 const getProducts = async (req, res) => {
     try {
       const { page = 1, limit = 4 } = req.query;
-      const { docs, hasPrevPage, hasNextPage, prevPage, nextPage } = await productsManager.getPaginatedProducts(page, limit);
+      const options = {
+        page: parseInt(page),
+        limit: parseInt(limit)
+      };
+      const filter = {};
+      const { docs, hasPrevPage, hasNextPage, prevPage, nextPage } = await productsService.getPaginatedProducts(filter, options);
+
+      const products = docs.map(product => product.toObject());
 
       res.render('products', {
-        products: docs,
+        products: products,
         hasPrevPage,
         hasNextPage,
         prevPage,
@@ -29,7 +38,7 @@ const getProducts = async (req, res) => {
 const getProductById = async (req, res) => {
     try {
       const {productId} = req.params;
-      const product = await productsManager.getById(productId);
+      const product = await productsService.getProductById(productId);
   
       if (!product) {
         // Si el producto no se encuentra, puedes mostrar un mensaje de error o redirigir a otra página
@@ -45,7 +54,7 @@ const getProductById = async (req, res) => {
 // EP3. Renderiza y obtiene todos los carritos
 const getCarts = async (req, res) =>{
     try {
-        const carts = await cartsManager.getAll();
+        const carts = await cartsService.getCarts();
         const products = carts.products;
 
         res.render('carts', { carts, products});
@@ -60,7 +69,7 @@ const getCartById = async (req, res) => {
     try {
         const { cid } = req.params; // Obtén el ID del carrito desde la URL
         // Busca el carrito por su ID
-        const cart = await cartsManager.getById(cid);
+        const cart = await cartsService.getCartById(cid);
         if (!cart) {
             return res.status(404).send({ status: 'error', message: 'Cart not found' });
         }

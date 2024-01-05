@@ -1,23 +1,35 @@
-import Carts from '../dao/dbManagers/carts.manager.js'
-//Creamos la instacia de la clase
-const cartsManager = new Carts()
+import * as cartsService from '../services/carts.service.js'
+
+const purchaseCart = async (req, res) =>{
+  try {
+      const { cid } = req.params;
+      const { user } = req.user
+
+      const result = await cartsService.purchaseCart(cid, user); 
+      res.send({status: 'success', payload: result});
+
+  } catch(error){
+      res.status(500).send({ status: 'error', message: error.message})
+  }    
+};
+
+
 
 //EP1 Obtener el listado de Carritos
 const getCarts = async (req, res) =>{
     try {
-        const carts = await cartsManager.getAll(); 
+        const carts = await cartsService.getCarts(); 
         res.send({status: 'success', payload: carts});
     } catch(error){
         res.status(500).send({ status: 'error', message: error.message})
     }    
 };
 
-
 //EP2 Encontrar un Carrito por Id
 const getCartById = async (req, res) =>{
     try {
         const { id } = req.params;
-        const cart = await cartsManager.getById(id);
+        const cart = await cartsService.getCartById(id);
 
         if(!cart){
             return res.status(404).send({ status: 'error', message: 'user not found'})
@@ -32,10 +44,10 @@ const getCartById = async (req, res) =>{
 };
 
 //EP3 Crear un carrito
-const createCart = async (req, res) =>{
+const saveCart = async (req, res) =>{
     try{
-        // Crea un nuevo carrito sin requerir atributos específicos
-        const result = await cartsManager.save({});
+        const { cart } = req.body;
+        const result = await cartsService.saveCart(cart);
         res.status(201).send({status: 'success', payload: result }); 
 
     } catch(error){
@@ -54,13 +66,13 @@ const updateCart = async (req, res) => {
         return res.status(400).send({ status: 'error', message: 'Invalid products format' });
       }
       // Busca el carrito por su ID
-      const cart = await cartsManager.getById(cid);
+      const cart = await cartsService.getCartById(cid);
   
       if (!cart) {
         return res.status(404).send({ status: 'error', message: 'Cart not found' });
       }
   
-      const result = await cartsManager.update(cid, { products });
+      const result = await cartsService.updateCart(cid, { products });
   
       res.send({ status: 'success', payload: result });
 
@@ -81,7 +93,7 @@ const updateCartById = async (req, res) => {
       }
   
       // Busca el carrito por su ID
-      const cart = await cartsManager.getById(cid);
+      const cart = await cartsService.getCartById(cid);
   
       if (!cart) {
         return res.status(404).send({ status: 'error', message: 'Cart not found' });
@@ -96,8 +108,9 @@ const updateCartById = async (req, res) => {
   
       // Actualiza la cantidad del producto en el carrito
       cart.products[productIndex].quantity = quantity;
+
       // Utiliza la función update para actualizar el carrito
-      const result = await cartsManager.update(cid, cart);
+      const result = await cartsService.updateCart(cid, cart);
   
       res.send({ status: 'success', payload: result });
 
@@ -107,11 +120,11 @@ const updateCartById = async (req, res) => {
   };
 
 //EP6 Eliminar un producto del carrito
-const deleteProductoIdByCartId = async (req, res) => {
+const deleteProductIdByCartId = async (req, res) => {
     try {
       const { cid, pid } = req.params; // Obtén el ID del carrito y el ID del producto desde la URL
       // Busca el carrito por su ID
-      const cart = await cartsManager.getById(cid);
+      const cart = await cartsService.getCartById(cid);
   
       if (!cart) {
         return res.status(404).send({ status: 'error', message: 'Cart not found' });
@@ -126,7 +139,7 @@ const deleteProductoIdByCartId = async (req, res) => {
       // Elimina el producto del arreglo de productos del carrito
       cart.products.splice(productIndex, 1);
       // Guarda el carrito actualizado en la base de datos
-      const result = await cartsManager.update(cid, { products: cart.products });
+      const result = await cartsService.updateCart(cid, { products: cart.products });
   
       res.send({ status: 'success', payload: result });
   
@@ -140,7 +153,7 @@ const deleteCartById = async (req, res) => {
     try {
       const { cid } = req.params; // Obtén el ID del carrito desde la URL
       // Busca el carrito por su ID
-      const cart = await cartsManager.getById(cid);
+      const cart = await cartsService.getCartById(cid);
       if (!cart) {
         return res.status(404).send({ status: 'error', message: 'Cart not found' });
       }
@@ -149,17 +162,20 @@ const deleteCartById = async (req, res) => {
         products: []
       };
       // Utiliza la función update para eliminar todos los productos del carrito
-      const result = await cartsManager.update(cid, updatedCartData);
+      const result = await cartsService.updateCart(cid, updatedCartData);
   
       res.send({ status: 'success', payload: result });
 
     } catch (error) {
       res.status(500).send({ status: 'error', message: error.message });
     }
-  };
+};
 
 export {
-    getCarts, getCartById, createCart, updateCart, updateCartById, 
-    deleteProductoIdByCartId,
+    purchaseCart,
+    getCarts, getCartById, saveCart, 
+    updateCart, 
+    updateCartById, 
+    deleteProductIdByCartId,
     deleteCartById
 }

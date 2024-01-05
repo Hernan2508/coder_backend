@@ -14,3 +14,10 @@
     </ul>
 </div>
 <hr>
+
+<form action="/api/carts/{{cart._id}}/purchase" method="POST">
+  <input type="hidden" name="cid" value="{{cart._id}}">
+  <button type="submit">Comprar Carrito</button>
+</form>
+<br>
+<a href="/carts">Volver a la lista de carritos</a>

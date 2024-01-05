@@ -1,3 +1,5 @@
+import buildUserDTO from '../DTOs/users.dto.js'
+
 // EP1. Autenticación con GitHub
 const github = async(req, res) =>{
     res.send({ status: 'success', message: 'user registered'});
@@ -47,6 +49,23 @@ const logout = (req, res) => {
     })
 };
 
+//EP8 Datos del current sessions
+const getCurrentSession = (req, res) => {
+    try {
+      const currentUser = req.user;
+      if (!currentUser) {
+        return res.status(401).send({ status: 'error', message: 'No user authenticated' });
+      }
+
+      //Implementación de patrón DTO
+      const userDTO = buildUserDTO(currentUser);
+
+      res.send({ status: 'success', user: userDTO });
+    } catch (error) {
+      res.status(500).send({ status: 'error', message: error.message });
+    }
+};
+
 export {
-    github, githubCallback, register, failRegister, login, failLogin, logout
+    github, githubCallback, register, failRegister, login, failLogin, logout, getCurrentSession
 }

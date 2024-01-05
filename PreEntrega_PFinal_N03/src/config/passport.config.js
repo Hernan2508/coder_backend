@@ -1,7 +1,7 @@
 import passport from 'passport';
 import local from 'passport-local';
 import GitHubStrategy from 'passport-github2';
-import usersModel from '../dao/dbManagers/models/users.model.js';
+import usersModel from '../dao/mongo/models/users.model.js';
 import { createHash, isValidPassword } from '../utils.js';
 
 //local es auntenticacion con usuario y contraseña
