@@ -3,7 +3,7 @@ import * as cartsService from '../services/carts.service.js'
 const purchaseCart = async (req, res) =>{
   try {
       const { cid } = req.params;
-      const { user } = req.user
+      const { user } = req //correcion
 
       const result = await cartsService.purchaseCart(cid, user); 
       res.send({status: 'success', payload: result});

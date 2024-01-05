@@ -1,5 +1,9 @@
-import ticketsRepository from "../repositories/tickets.repository.js";
+import TicketsRepository from "../repositories/tickets.repository.js";
+import { Tickets } from "../dao/factory.js";
 import { v4 as uuidv4 } from 'uuid';
+
+const ticketsDao = new Tickets();
+const ticketsRepository = new TicketsRepository(ticketsDao);
 
 const generatePurchase = async (user, amount) => {
     const newTicket = {
