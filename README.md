@@ -1,6 +1,7 @@
 #### coder_backend: Proyecto
-### PREENTREGA N°03: Desarrollado por Hernán Ramírez Zavaleta
-### Revisar Carpeta PreEntrega_PFinal_N03
+### Desafio Entregable: Mocking y Manejo de ERRORES
+### Desarrollado por Hernán Ramírez Zavaleta
+### Revisar Carpeta DesafrioEntregable_MockingManejoErrores
 ### CODERHOUSE
 ### -----------
-### REVISAR PreEntrega_PFinal_N03r : Desafío 25/12/2023 ------ VF
+### REVISAR DesafrioEntregable_MockingManejoErrores : Desafío 10/01/2024 ------ VF
