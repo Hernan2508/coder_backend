@@ -1,0 +1,92 @@
+[
+	{
+		"title": "refrigeradora",
+		"description": "electrodomesticos",
+		"price": 1400,
+		"thumbnail": "Sin imagen",
+		"code": "prod-01",
+		"stock": 50,
+		"id": 1
+	},
+	{
+		"title": "cocina",
+		"description": "electrodomesticos",
+		"price": 900,
+		"thumbnail": "Sin imagen",
+		"code": "prod-02",
+		"stock": 25,
+		"id": 2
+	},
+	{
+		"title": "licuadora",
+		"description": "electrodomesticos",
+		"price": 135,
+		"thumbnail": "Sin imagen",
+		"code": "prod-03",
+		"stock": 25,
+		"id": 3
+	},
+	{
+		"title": "batidora",
+		"description": "electrodomesticos",
+		"price": 220,
+		"thumbnail": "Sin imagen",
+		"code": "prod-04",
+		"stock": 25,
+		"id": 4
+	},
+	{
+		"title": "extractor",
+		"description": "electrodomesticos",
+		"price": 89,
+		"thumbnail": "Sin imagen",
+		"code": "prod-05",
+		"stock": 25,
+		"id": 5
+	},
+	{
+		"title": "waflera",
+		"description": "electrodomesticos",
+		"price": 120,
+		"thumbnail": "Sin imagen",
+		"code": "prod-06",
+		"stock": 25,
+		"id": 6
+	},
+	{
+		"title": "aspiradora",
+		"description": "electrodomesticos",
+		"price": 275,
+		"thumbnail": "Sin imagen",
+		"code": "prod-07",
+		"stock": 25,
+		"id": 7
+	},
+	{
+		"title": "lavadora",
+		"description": "electrodomesticos",
+		"price": 1250,
+		"thumbnail": "Sin imagen",
+		"code": "prod-08",
+		"stock": 25,
+		"id": 8
+	},
+	{
+		"title": "cafetera",
+		"description": "electrodomesticos",
+		"price": 150,
+		"thumbnail": "Sin imagen",
+		"code": "prod-09",
+		"stock": 25,
+		"id": 9
+	},
+	{
+		"title": "plancha",
+		"description": "electrodomesticos",
+		"price": 125,
+		"thumbnail": "Sin imagen",
+		"code": "prod-10",
+		"stock": 25,
+		"id": 10
+	}
+]
