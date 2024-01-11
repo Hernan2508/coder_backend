@@ -14,6 +14,7 @@ import * as messagesService from './services/messages.service.js'
 import { initializePassport } from './config/passport.config.js';
 import passport from 'passport';
 import configs from "./config/config.js";
+import errorHandler from './middlewares/errors/index.js'
 
 const app = express();
 
@@ -44,13 +45,15 @@ initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 // Routes
 app.use('/', viewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/sessions', sessionsRouter);
 app.use('/api/messages', messagesRouter);
+
+//Configuracion de Manejo de Errores debe estar despué de los Routes
+app.use(errorHandler);
 
 const server = app.listen(configs.port, () => console.log(`Server running on port ${configs.port}`));
 

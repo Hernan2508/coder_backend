@@ -1,5 +1,8 @@
 //import Products from '../dao/mongo/classes/products.dao.js';
-import * as productsService from '../services/products.service.js'
+import * as productsService from '../services/products.service.js';
+import { generateProducts } from '../utils.js';
+import CustomError from "../middlewares/errors/CustomError.js";
+import EErrors from "../middlewares/errors/enums.js";
 
 // Creamos la instancia de la clase
 //const productsManager = new Products();
@@ -57,11 +60,17 @@ const getProductById = async (req, res) => {
 
 // EP3 Crear un Producto
 const saveProduct = async (req, res) => {
-    try {
+    /* try { */
         const { title, description, price, thumbnail, code, stock } = req.body;
 
         if (!title || !description || !price || !thumbnail || !code || stock === undefined) {
-            return res.status(400).send({ status: 'error', message: 'Incomplete values' });
+            throw CustomError.createError({
+                name: 'ProductError',
+                cause: 'Invalid data type, tittle, description, price, thumbnail, code, stock required',
+                message: 'Error trying to create product',
+                code: EErrors.INVALID_TYPE_ERROR
+            })
+            /* return res.status(400).send({ status: 'error', message: 'Incomplete values' }); */
         }
 
         const result = await productsService.saveProduct({
@@ -75,9 +84,9 @@ const saveProduct = async (req, res) => {
 
         res.send({ status: 'success', payload: result });
 
-    } catch (error) {
+    /* } catch (error) {
         res.status(500).send({ status: 'error', message: 'Internal Server Error' });
-    }
+    } */
 };
 
 // EP4 Actualizar un Producto por Id
@@ -127,7 +136,26 @@ const deleteProductById = async (req, res) => {
     }
 };
 
+// EP6 Generar Productos - Mockups
+const generateMockingProducts = (req, res) => {
+    try {
+        let products = [];
+        for (let i = 0; i < 100; i++) {
+            // Utiliza la función correcta
+            products.push(generateProducts());
+        }
+        res.send({
+            status: 'Ok',
+            counter: products.length,
+            data: products
+        });
+    } catch (error) {
+        console.error('Error generating products:', error);
+        res.status(500).send({ status: 'error', message: 'Internal Server Error' });
+    }
+}
+
 export {
     getProducts, getProductById, saveProduct,
-    updateProduct, deleteProductById
+    updateProduct, deleteProductById, generateMockingProducts
 };
