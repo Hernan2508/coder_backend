@@ -1,7 +1,7 @@
 #### coder_backend: Proyecto
-### Desafio Entregable: Mocking y Manejo de ERRORES
+### Desafio Entregable: Loggin y Performance 
 ### Desarrollado por Hernán Ramírez Zavaleta
-### Revisar Carpeta DesafrioEntregable_MockingManejoErrores
+### Revisar Carpeta DesafrioEntregable_LogginPerformance
 ### CODERHOUSE
 ### -----------
-### REVISAR DesafrioEntregable_MockingManejoErrores : Desafío 10/01/2024 ------ VF
+### REVISAR DesafrioEntregable_LogginPerformance : Desafío 17/01/2024 ------ VF
