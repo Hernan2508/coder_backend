@@ -38,6 +38,7 @@ const getProducts = async (req, res) =>{
         res.send({status: 'success', payload: result});
 
     } catch (error) {
+        req.logger.error(`Error al obtener productos: ${error.message}`);
         res.status(500).send({ status: 'error', message: error.message})
     }
 };
@@ -54,6 +55,7 @@ const getProductById = async (req, res) => {
         res.send({ status: 'success', payload: product });
 
     } catch (error) {
+        req.logger.error('Error getting product by ID:', error);
         res.status(500).send({ status: 'error', message: 'Internal Server Error' });
     }
 };
@@ -111,6 +113,7 @@ const updateProduct = async (req, res) => {
         res.status(201).send({ status: 'success', payload: result });
 
     } catch (error) {
+        req.logger.error('Error updating product:', error);
         res.status(500).send({ status: 'error', message: 'Internal Server Error' });
     }
 };
@@ -131,7 +134,8 @@ const deleteProductById = async (req, res) => {
         };
 
     } catch (error) {
-        console.error('Error in deleteProductById method:', error);
+        /* console.error('Error in deleteProductById method:', error); */
+        req.logger.error('Error in deleteProductById method:', error);
         res.status(500).send({ status: 'error', message: 'Internal Server Error' });
     }
 };
@@ -150,7 +154,8 @@ const generateMockingProducts = (req, res) => {
             data: products
         });
     } catch (error) {
-        console.error('Error generating products:', error);
+        /* console.error('Error generating products:', error); */
+        req.logger.error('Error generating mocking products:', error);
         res.status(500).send({ status: 'error', message: 'Internal Server Error' });
     }
 }

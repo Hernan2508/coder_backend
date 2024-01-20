@@ -9,6 +9,7 @@ const purchaseCart = async (req, res) =>{
       res.send({status: 'success', payload: result});
 
   } catch(error){
+      req.logger.error('Error purchasing cart:', error);
       res.status(500).send({ status: 'error', message: error.message})
   }    
 };
@@ -21,6 +22,7 @@ const getCarts = async (req, res) =>{
         const carts = await cartsService.getCarts(); 
         res.send({status: 'success', payload: carts});
     } catch(error){
+        req.logger.error('Error fetching carts:', error);
         res.status(500).send({ status: 'error', message: error.message})
     }    
 };
@@ -39,6 +41,7 @@ const getCartById = async (req, res) =>{
 
     } catch (error) {
         console.log(error.message);
+        req.logger.error(`Error fetching cart by ID ${id}: ${error.message}`);
         res.status(500).send({ error: error.message});
     }
 };
@@ -51,6 +54,7 @@ const saveCart = async (req, res) =>{
         res.status(201).send({status: 'success', payload: result }); 
 
     } catch(error){
+        req.logger.error(`Error saving cart: ${error.message}`);
         res.status(500).send({ error: 'Se produjo un error al procesar la consulta'})
     }    
 };
@@ -77,9 +81,10 @@ const updateCart = async (req, res) => {
       res.send({ status: 'success', payload: result });
 
     } catch (error) {
+      req.logger.error(`Error updating cart by ID ${cid}: ${error.message}`);
       res.status(500).send({ status: 'error', message: error.message });
     }
-  };
+};
 
 //EP5 Actualizar un carrito por Id
 const updateCartById = async (req, res) => {
@@ -115,6 +120,7 @@ const updateCartById = async (req, res) => {
       res.send({ status: 'success', payload: result });
 
     } catch (error) {
+      req.logger.error(`Error updating quantity of product by ID ${pid} in cart by ID ${cid}: ${error.message}`);
       res.status(500).send({ status: 'error', message: error.message });
     }
   };
@@ -144,6 +150,7 @@ const deleteProductIdByCartId = async (req, res) => {
       res.send({ status: 'success', payload: result });
   
     } catch (error) {
+      req.logger.error(`Error deleting product by ID ${pid} from cart by ID ${cid}: ${error.message}`);
       res.status(500).send({ status: 'error', message: error.message });
     }
   };
@@ -167,6 +174,7 @@ const deleteCartById = async (req, res) => {
       res.send({ status: 'success', payload: result });
 
     } catch (error) {
+      req.logger.error(`Error deleting cart by ID ${cid}: ${error.message}`);
       res.status(500).send({ status: 'error', message: error.message });
     }
 };

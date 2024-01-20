@@ -16,7 +16,8 @@ dotenv.config({
 const configs = {
     port: process.env.PORT,
     mongoUrl: process.env.MONGO_URL,
-    persistence: process.env.PERSISTENCE
+    persistence: process.env.PERSISTENCE,
+    env: enviroment
 };
 console.log('Port from config:', configs.port, configs.mongoUrl, configs.persistence);
 export default configs;
