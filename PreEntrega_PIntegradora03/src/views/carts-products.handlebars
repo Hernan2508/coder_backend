@@ -1,0 +1,23 @@
+<p>Detalle de Productos por Carrito</p>
+<hr>
+<div>
+    <ul>
+        <li>Productos:</li>
+        <ul>
+            {{#each products}}
+            <hr>
+            <li>Producto: {{this.product.title}}</li>
+            <li>Cantidad: {{this.quantity}}</li>
+            <hr>
+            {{/each}}
+        </ul>
+    </ul>
+</div>
+<hr>
+
+<form action="/api/carts/{{cart._id}}/purchase" method="POST">
+  <input type="hidden" name="cid" value="{{cart._id}}">
+  <button type="submit">Comprar Carrito</button>
+</form>
+<br>
+<a href="/carts">Volver a la lista de carritos</a>
