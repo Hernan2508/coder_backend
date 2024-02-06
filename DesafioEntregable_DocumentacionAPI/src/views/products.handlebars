@@ -1,0 +1,27 @@
+<p>Bienvenido: {{user.name}}</p>
+<p>Lista de Productos</p>
+<hr>
+<div>
+    {{#each products}}
+    <ul>
+        <li>Producto: {{this.title}}</li>
+        <li>Descripción: {{this.description}}</li>
+        <li>Precio: ${{this.price}}</li>
+        <li>Stock: {{this.stock}} unidades</li>
+        <li>Código: {{this.code}}</li>
+        <li><a href="/products/{{this._id}}">Ver detalles</a></li>
+        <hr>
+    </ul>
+    {{/each}}
+    {{#if hasPrevPage}}
+    <a href="/products?page={{prevPage}}"><button>Anterior</button></a>
+    {{/if}}
+    {{#if hasNextPage}}
+    <a href="/products?page={{nextPage}}"><button>Siguiente</button></a>
+    {{/if}}
+</div>
+<br>
+<a href="/"><button>Ver Perfil</button></a>
+<br>
+<br>
+<a href="/api/sessions/logout"><button>Salir</button></a>

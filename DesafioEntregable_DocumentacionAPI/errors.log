@@ -1,0 +1,55 @@
+{"level":"info","message":"GET en /loggerTest - 2024-01-20T21:32:09.750Z","timestamp":"2024-01-20T21:32:09.750Z"}
+{"level":"debug","message":"Este es un mensaje de debug","timestamp":"2024-01-20T21:32:09.750Z"}
+{"level":"http","message":"Este es un mensaje de http","timestamp":"2024-01-20T21:32:09.751Z"}
+{"level":"info","message":"Este es un mensaje de info","timestamp":"2024-01-20T21:32:09.751Z"}
+{"level":"warning","message":"Este es un mensaje de warning","timestamp":"2024-01-20T21:32:09.751Z"}
+{"level":"error","message":"Este es un mensaje de error","timestamp":"2024-01-20T21:32:09.751Z"}
+{"level":"info","message":"GET en /loggerTest - 2024-01-20T21:33:20.613Z","timestamp":"2024-01-20T21:33:20.615Z"}
+{"level":"debug","message":"Este es un mensaje de debug","timestamp":"2024-01-20T21:33:20.616Z"}
+{"level":"http","message":"Este es un mensaje de http","timestamp":"2024-01-20T21:33:20.616Z"}
+{"level":"info","message":"Este es un mensaje de info","timestamp":"2024-01-20T21:33:20.616Z"}
+{"level":"warning","message":"Este es un mensaje de warning","timestamp":"2024-01-20T21:33:20.616Z"}
+{"level":"error","message":"Este es un mensaje de error","timestamp":"2024-01-20T21:33:20.616Z"}
+{"level":"info","message":"GET en /loggerTest - 2024-01-20T21:33:47.072Z","timestamp":"2024-01-20T21:33:47.074Z"}
+{"level":"debug","message":"Este es un mensaje de debug","timestamp":"2024-01-20T21:33:47.075Z"}
+{"level":"http","message":"Este es un mensaje de http","timestamp":"2024-01-20T21:33:47.076Z"}
+{"level":"info","message":"Este es un mensaje de info","timestamp":"2024-01-20T21:33:47.076Z"}
+{"level":"warning","message":"Este es un mensaje de warning","timestamp":"2024-01-20T21:33:47.076Z"}
+{"level":"error","message":"Este es un mensaje de error","timestamp":"2024-01-20T21:33:47.076Z"}
+{"level":"info","message":"GET en /loggerTest - 2024-01-20T21:34:31.289Z","timestamp":"2024-01-20T21:34:31.292Z"}
+{"level":"debug","message":"Este es un mensaje de debug","timestamp":"2024-01-20T21:34:31.293Z"}
+{"level":"http","message":"Este es un mensaje de http","timestamp":"2024-01-20T21:34:31.293Z"}
+{"level":"info","message":"Este es un mensaje de info","timestamp":"2024-01-20T21:34:31.293Z"}
+{"level":"warning","message":"Este es un mensaje de warning","timestamp":"2024-01-20T21:34:31.293Z"}
+{"level":"error","message":"Este es un mensaje de error","timestamp":"2024-01-20T21:34:31.294Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger en desarrollo.","timestamp":"2024-01-20T21:41:25.661Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger en desarrollo.","timestamp":"2024-01-20T21:45:09.706Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger en desarrollo.","timestamp":"2024-01-20T21:45:19.629Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger en desarrollo.","timestamp":"2024-01-20T21:50:39.154Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger en desarrollo.","timestamp":"2024-01-20T21:51:04.879Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger en desarrollo.","timestamp":"2024-01-20T21:51:19.834Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T21:53:45.403Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de PRODUCTION.","timestamp":"2024-01-20T21:53:55.337Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T21:53:58.257Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T22:13:22.679Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T22:21:31.899Z"}
+{"level":"info","message":"GET en / - 2024-01-20T22:21:36.403Z","timestamp":"2024-01-20T22:21:36.403Z"}
+{"level":"info","message":"GET en / - 2024-01-20T22:22:14.411Z","timestamp":"2024-01-20T22:22:14.411Z"}
+{"level":"info","message":"GET en / - 2024-01-20T22:23:06.589Z","timestamp":"2024-01-20T22:23:06.589Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T22:24:03.316Z"}
+{"level":"info","message":"Logger middleware applied for GET on / - 2024-01-20T22:24:12.123Z","timestamp":"2024-01-20T22:24:12.123Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T22:27:17.430Z"}
+{"level":"info","message":"Logger middleware applied for GET on / - 2024-01-20T22:27:23.198Z","timestamp":"2024-01-20T22:27:23.199Z"}
+{"level":"info","message":"Logger middleware applied for GET on / - 2024-01-20T22:27:46.747Z","timestamp":"2024-01-20T22:27:46.748Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T22:30:01.313Z"}
+{"level":"info","message":"Logger middleware applied for GET on /mockingproducts - 2024-01-20T22:30:12.948Z","timestamp":"2024-01-20T22:30:12.948Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T22:36:07.316Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T22:36:46.808Z"}
+{"level":"info","message":"Logger middleware applied for GET on / - 2024-01-20T22:36:57.826Z","timestamp":"2024-01-20T22:36:57.826Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T22:38:34.604Z"}
+{"level":"info","message":"Logger middleware applied for GET on /65940f5966470a2b0381421d - 2024-01-20T22:38:47.512Z","timestamp":"2024-01-20T22:38:47.512Z"}
+{"level":"info","message":"Logger middleware applied for GET on /65940f5966470a2b0381421d - 2024-01-20T22:38:54.834Z","timestamp":"2024-01-20T22:38:54.834Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T23:01:37.244Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T23:03:17.634Z"}
+{"level":"info","message":"Logger middleware applied for GET on / - 2024-01-20T23:03:30.127Z","timestamp":"2024-01-20T23:03:30.127Z"}
+{"level":"info","message":"Logger middleware applied for GET on /6594aae2250582db19fe0e0a - 2024-01-20T23:03:41.529Z","timestamp":"2024-01-20T23:03:41.529Z"}
