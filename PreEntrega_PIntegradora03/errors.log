@@ -53,3 +53,4 @@
 {"level":"debug","message":"Este es un mensaje de prueba desde el logger de DEVELOPMENT.","timestamp":"2024-01-20T23:03:17.634Z"}
 {"level":"info","message":"Logger middleware applied for GET on / - 2024-01-20T23:03:30.127Z","timestamp":"2024-01-20T23:03:30.127Z"}
 {"level":"info","message":"Logger middleware applied for GET on /6594aae2250582db19fe0e0a - 2024-01-20T23:03:41.529Z","timestamp":"2024-01-20T23:03:41.529Z"}
+{"level":"debug","message":"Este es un mensaje de prueba desde el logger de undefined.","timestamp":"2024-02-06T21:12:49.180Z"}

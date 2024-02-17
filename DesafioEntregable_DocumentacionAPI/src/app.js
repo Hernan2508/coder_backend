@@ -6,9 +6,11 @@ import viewsRouter from './routes/views.router.js'
 import sessionsRouter from './routes/sessions.router.js'
 import handlebars from 'express-handlebars';
 import mongoose from 'mongoose';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express';
 import MongoStore from 'connect-mongo';
 import session from 'express-session';
-import { __dirname } from './utils.js';
+import { __dirname, __mainDirname } from './utils.js';
 import { Server } from 'socket.io';
 import * as messagesService from './services/messages.service.js'
 import { initializePassport } from './config/passport.config.js';
@@ -17,6 +19,24 @@ import configs from "./config/config.js";
 import errorHandler from './middlewares/errors/index.js'
 
 const app = express();
+
+// Swagger
+console.log(__mainDirname);
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.1',
+        info:{
+            title: 'Documentación del proyecto de Desarrollo Backend',
+            description: 'API pensada en resolver el proceso de ecommerce'
+        }
+    },
+    apis: [`${__mainDirname}/docs/**/*.yaml`] //todas las carpetas
+}
+
+const specs = swaggerJSDoc(swaggerOptions);
+app.use('/api/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
+
 
 //abc
 // Servidor de Archivos Estáticos

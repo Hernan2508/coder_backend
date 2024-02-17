@@ -1,0 +1,221 @@
+paths:
+  /api/products:
+    get:
+      summary: Este servicio obtiene el listado de todos los productos.
+      # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los productos fueron obtenidos satisfactoriamente de la BDD
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión.
+    post:
+      summary: Este servicio crea un nuevo producto.
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                $ref: '#components/requestBodies/updateProduct'
+      responses:
+        "200":
+          description: Los productos fueron obtenidos satisfactoriamente de la BDD
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "ProductError":
+          description: Error en crear el producto
+  /api/products/mockingproducts:
+    get:
+      summary: Este servicio obtiene el listado de todos los productos mockeados.
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los productos mockeados fueron obtenidos satisfactoriamente.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
+  /api/products/{id}:
+    get:
+      summary: Este servicio obtiene el producto por id.
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: El id del producto a buscar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: El producto fue obtenido satisfactoriamente de la BDD
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Product'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión 
+    put:
+      summary: Este servicio actualiza el producto por id.
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: El id del producto a actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                $ref: '#components/requestBodies/updateProduct'
+      responses:
+        "200":
+          description: El producto fue actualizado satisfactoriamente de la BDD
+        "400":
+          description: Campos incompletos del producto a actualizar.
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión   
+    delete:
+      summary: Este servicio elimina el producto por id.
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: El id del producto a eliminar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: El producto fue eliminado satisfactoriamente de la BDD.
+        "404":
+          description: El producto a eliminar no fue encontrado.
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión 
+components:
+  schemas:
+    Product:
+      type: Object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado por mongoDB, es el id del producto
+        tittle:
+          type: String
+          description: Nombre del producto
+        description:
+          type: String
+          description: Descripción del producto
+        price:
+          type: Number
+          description: Precio del producto
+        thumbnail:
+          type: String
+          description: Imagen referencial del producto
+        code:
+          type: String
+          description: Código del Producto
+        stock:
+          type: Number
+          description: Stock del producto
+        carts:
+          type: String
+          description: Carritos asignados para el producto
+      example:
+        _id": "65940f5966470a2b0381421d"
+        title: Licuadora
+        description: sala
+        price: 1900
+        thumbnail: abc.jpg
+        code: prod-01
+        stock: 480
+        carts: []
+  requestBodies:
+    updateProduct:
+      type: Object
+      properties:
+        tittle:
+          type: String
+          description: Nombre del producto
+        description:
+          type: String
+          description: Descripción del producto
+        price:
+          type: Number
+          description: Precio del producto
+        thumbnail:
+          type: String
+          description: Imagen referencial del producto
+        code:
+          type: String
+          description: Código del Producto
+        stock:
+          type: Number
+          description: Stock del producto
+        carts:
+          type: String
+          description: Carritos asignados para el producto
+      example:
+        title: Licuadora
+        description: sala
+        price: 1900
+        thumbnail: abc.jpg
+        code: prod-01
+        stock: 480
+        carts: []
+    saveProduct:
+      type: Object
+      properties:
+        tittle:
+          type: String
+          description: Nombre del producto
+        description:
+          type: String
+          description: Descripción del producto
+        price:
+          type: Number
+          description: Precio del producto
+        thumbnail:
+          type: String
+          description: Imagen referencial del producto
+        code:
+          type: String
+          description: Código del Producto
+        stock:
+          type: Number
+          description: Stock del producto
+        carts:
+          type: String
+          description: Carritos asignados para el producto
+      example:
+        title: Licuadora
+        description: sala
+        price: 1900
+        thumbnail: abc.jpg
+        code: prod-01
+        stock: 480
+        carts: []

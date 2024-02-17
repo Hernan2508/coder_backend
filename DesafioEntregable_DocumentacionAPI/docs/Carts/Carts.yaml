@@ -1,0 +1,299 @@
+paths:
+  /api/carts:
+    get:
+      summary: Este servicio obtiene el listado de todos los carritos.
+      # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Los carritos fueron obtenidos satisfactoriamente de la BDD
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Cart'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión.
+    post:
+      summary: Este servicio crea un carrito.
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: El carrito fue creado satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/saveCart'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión.
+  /api/carts/{id}:
+    get:
+      summary: Este servicio obtiene el carrito por id.
+      tags:
+        - Carts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: El id del carrito a buscar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: El carrito fue obtenido satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Cart'
+        "404":
+          description: El carrito no fue encontrado.
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión.  
+  /api/carts/{cid}:
+    put:
+      summary: Este servicio obtiene el carrito por id.
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El cid del carrito a actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                $ref: '#components/requestBodies/updateCart'
+      responses:
+        "200":
+          description: El carrito fue actualizado satisfactoriamente de la BDD
+        "400":
+          description: Formato inválido para actualizar
+        "404":
+          description: El carrito a actualizar no fue encontrado
+        "500":
+          description: El carrito fue actualizado satisfactoriamente de la BDD
+    delete:
+      summary: Este servicio elimina el carrito por id.
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El cid del carrito a eliminar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: El carrito fue eliminado satisfactoriamente de la BDD.
+        "404":
+          description: El carrito a eliminar no fue encontrado.
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión 
+  /api/carts/{cid}/products/{pid}:
+    put:
+      summary: Este servicio actualiza el producto de un carrito por el id del carrito y producto.
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El cid del carrito a actualizar
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: El pid del producto a actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                $ref: '#components/requestBodies/updateCartById'
+      responses:
+        "200":
+          description: El producto del carrito fue actualizado satisfactoriamente de la BDD
+        "400":
+          description: Formato inválido para actualizar
+        "404":
+          description: El producto no fue encontrado en el carrito a actualizar
+        "500":
+          description: El producto del carritocarrito fue actualizado satisfactoriamente de la BDD
+    delete:
+      summary: Este servicio elimina el producto por el id del carrito y del producto
+      tags:
+        - Carts
+    parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El cid del carrito a eliminar
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: El pid del producto a eliminar
+          schema:
+            type: string
+    responses:
+        "200":
+          description: El producto del carrito fue eliminado satisfactoriamente de la BDD.
+        "404":
+          description: El producto del carrito a eliminar no fue encontrado.
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión 
+  /api/carts/{cid}/purchase:
+    post:
+      summary: Este servicio realizar la compra del carrito por id.
+      tags:
+        - Carts
+      parameters:
+          - name: cid
+            in: path
+            required: true
+            description: El cid del carrito a comprar
+            schema:
+              type: string
+      responses:
+        "200":
+          description: La compra del carrito fue realizada satisfactoriamente.
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión 
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado por MongoDB, es el id del carrito
+        products:
+          type: array
+          description: Array de objetos que contienen el producto y su cantidad en el carrito
+          items:
+            type: object
+            properties:
+              product:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: ID del producto
+                  title:
+                    type: string
+                    description: Nombre del producto
+                  description:
+                    type: string
+                    description: Descripción del producto
+                  price:
+                    type: number
+                    description: Precio del producto
+                  thumbnail:
+                    type: string
+                    description: URL de la imagen del producto
+                  code:
+                    type: string
+                    description: Código único del producto
+                  stock:
+                    type: integer
+                    description: Stock disponible del producto
+                  carts:
+                    type: array
+                    description: Array de IDs de carritos asociados al producto
+                    items:
+                      type: string
+                      description: ID del carrito asociado
+              quantity:
+                type: integer
+                description: Cantidad del producto en el carrito
+        __v:
+          type: integer
+          description: Valor por defecto de MongoDB
+      example:
+        _id: "1234567890"
+        products:
+          - product:
+              _id: "65940f5966470a2b0381421d"
+              title: "Licuadora"
+              description: "sala"
+              price: 1900
+              thumbnail: "abc.jpg"
+              code: "prod-01"
+              stock: 480
+              carts: []
+            quantity: 20
+          - product:
+              _id: "65948a329383d9092aee4f59"
+              title: "Sillón"
+              description: "sala"
+              price: 2500
+              thumbnail: "abc.jpg"
+              code: "prod-02"
+              stock: 140
+              carts: []
+            quantity: 60
+        __v: 0
+    saveCart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado por MongoDB, es el id del carrito
+        products:
+          type: array
+          description: Array de objetos que contienen el producto y su cantidad en el carrito
+        __v:
+          type: integer
+          description: Valor por defecto de MongoDB
+      example:
+        _id: "1234567890"
+        products: []
+        __v: 0
+  requestBodies:
+    updateCart:
+      type: object
+      properties:
+        products:
+          type: array
+          description: Array de objetos que contienen el producto y su cantidad en el carrito
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                description: ID del producto
+              quantity:
+                type: integer
+                description: Cantidad del producto en el carrito
+      example:
+        value:
+          products:
+            - product: "65940f5966470a2b0381421d"
+              quantity: 20
+            - product: "65948a329383d9092aee4f59"
+              quantity: 60
+    updateCartById:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          description: Cantidad del producto en el carrito
+      example:
+        quantity: 20
+                  

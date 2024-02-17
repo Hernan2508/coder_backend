@@ -2,9 +2,11 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import bcrypt from 'bcrypt';
 import { fakerES as faker } from '@faker-js/faker'; //ES español
+import path from 'path'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const __mainDirname = path.join(__dirname, '..') //navegar hacia atras antes del src
 
 //1. Metodo para hashear nuestra contraseña
 const createHash = password =>
@@ -43,6 +45,7 @@ testGenerateProducts();
 */
 export {
     __dirname,
+    __mainDirname,
     createHash,
     isValidPassword,
     generateProducts
